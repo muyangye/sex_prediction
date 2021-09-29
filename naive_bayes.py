@@ -1,3 +1,4 @@
+import math
 lines = open('train.txt', encoding='utf-8').readlines()[1:]
 totalMale = totalFemale = 0
 characterToSex = {}
@@ -14,7 +15,8 @@ for line in lines:
         if (character not in characterToSex):
             characterToSex[character] = {}
         if (sex not in characterToSex[character]):
-            characterToSex[character][sex] = 0
+            characterToSex[character]['1'] = 0
+            characterToSex[character]['0'] = 0
         characterToSex[character][sex] += 1
 total = totalMale + totalFemale
 
@@ -29,14 +31,21 @@ while True:
     name = input()
     if (name == 'exit'):
         break
-    maleProb = femaleProb = 1
-    # Naive Bayes assumes that all events are independent. i.e. P(sex|abc) = P(sex|a) * P(sex|b) * P(sex|c)
+    maleProb = totalMale / total
+    femaleProb = totalFemale / total
+    # Naive Bayes assumes that events are conditionally independent with respect to the outcome. i.e. P(abc|sex) = P(a|sex) * P(b|sex) * P(c|sex)
+    # Naive Bayes also assumes that events are independent themselves. i.e. P(abc) = P(a) * P(b) * P(c)
+    # Finally, by Bayes' Theorem, P(sex|abc) = P(abc|sex) * P(sex) / P(abc) = P(a|sex) * P(b|sex) * P(c|sex) * P(sex) / [P(a) * P(b) * P(c)]
+    # Proved in line 25, P(char|sex) * P(sex) = number of char in a specific sex / total number of all sex. And P(a) = P(b) = P(c) = 1 / number of all chars
     for char in name:
-        # P(char) = 1 / number of all chars
-        maleProb *= characterToSex[char]['1'] / total / len(characterToSex)
-        femaleProb *= characterToSex[char]['0'] / total / len(characterToSex)
+        if (char not in characterToSex):
+            print("Sorry! One character in the name you provided is not included in the training set!")
+            quit()
+        maleProb *= characterToSex[char]['1'] / totalMale * len(characterToSex)
+        femaleProb *= characterToSex[char]['0'] / totalFemale * len(characterToSex)
     # normalization so that probabilities add up to 1
-    finalMaleProb = maleProb / (maleProb + femaleProb) * 100
-    finalFemaleProb = femaleProb / (maleProb + femaleProb) * 100
-    print('The chance that guy is male is: ' + str(finalMaleProb) + '%')
-    print('The chance that guy is female is: ' + str(finalFemaleProb) + '%')
+    # Actually with normalization, we don't need to * len(characterToSex) every time. But leave it there as it is more direct
+    finalMaleProb = maleProb / (maleProb + femaleProb) 
+    finalFemaleProb = femaleProb / (maleProb + femaleProb)
+    print('The chance that guy is male is: ' + str(finalMaleProb*100) + '%')
+    print('The chance that guy is female is: ' + str(finalFemaleProb*100) + '%')
