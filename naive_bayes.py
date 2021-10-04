@@ -1,4 +1,3 @@
-import math
 lines = open('train.txt', encoding='utf-8').readlines()[1:]
 totalMale = totalFemale = 0
 characterToSex = {}
