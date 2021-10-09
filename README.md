@@ -5,7 +5,7 @@ A sex predictor given Chinese names based on Naive Bayes' Theorem. Combines two 
 py naive_bayes.py
 
 # Play around with it
-Do you wonder why the prediction is different from your actual sex? You can find out which character in your name leads to which sex by how much by replacing that character with any non-Chinese character such as letter 'x', 'y', 'z'. The prediction then made is based on remaining legitimate Chinese characters. Also, you can choose not to use any one of the training set by simply commenting out codes reading data from that training set.
+Do you wonder why the prediction is different from your actual sex? You can find out which character in your name leads to which sex by how much by replacing that character with any non-Chinese character such as English letter 'x', 'y', 'z'. The prediction is then made based on remaining legitimate Chinese characters. Also, you can choose not to use any one of the training set by simply commenting out codes reading data from that training set.
 
 # Math behind
 to_do
