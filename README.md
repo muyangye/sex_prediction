@@ -1,7 +1,7 @@
 # sex_prediction
 A sex predictor given Chinese names based on Naive Bayes' Theorem. Combines two training sets. No 3rd party libraries involved.
 
-# run
+# Run
 py naive_bayes.py
 
 # Play around with it
