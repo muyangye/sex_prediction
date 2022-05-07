@@ -6,7 +6,7 @@ def read_data():
     char_freqs = {}
 
     # Collect data from the csv traning set
-    with open("freqs1.csv", encoding="utf-8", newline="") as f:
+    with open("freqs.csv", encoding="utf-8", newline="") as f:
         reader = csv.reader(f)
         # Skip the first line
         next(reader)
